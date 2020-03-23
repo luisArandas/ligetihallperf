@@ -1,3 +1,3 @@
-ofxGui
+ofxGuiExtended
 ofxHoa
 ofxStk

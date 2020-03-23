@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<group>
+	<int_slider>64</int_slider>
+	<float_slider>30</float_slider>
+	<toggle>0</toggle>
+	<int_field>100</int_field>
+	<float_field>100</float_field>
+	<text_field>text</text_field>
+	<vec2_slider>0, 0</vec2_slider>
+	<vec3_slider>100, 150, 90</vec3_slider>
+	<vec4_slider>0, 0, 0, 0</vec4_slider>
+</group>

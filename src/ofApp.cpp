@@ -1,6 +1,8 @@
 #include "ofApp.h"
 #include <array>
 
+# define M_PI 3.14159265358979323846
+
 using namespace hoa;
 
 //--------------------------------------------------------------
@@ -8,13 +10,13 @@ void ofApp::setup() {
     
     listener = shared_ptr<Draggable>(new Draggable(glm::vec3(ofGetWidth()/2.f, ofGetHeight()/2.f, 0)));
 
-    beat.openFile(ofToDataPath("gminor.wav", true));
+    beat.openFile(ofToDataPath("soundscape1.wav", true));
     stk::Stk::setSampleRate(44100.0);
     //    uncomment this line to print avaliable audio devices
-    ofSoundStreamListDevices();
+    //ofSoundStreamListDevices();
+
     //soundStream.setDeviceId(5); // use this function to set the audio device if necessary
     
-    // CREATE MORE AND CHECK THIS AFTER ALL
     
     //number of outputs must be >= order*2+1 for decoder on regular mode*/
     nOutputs = 2;
@@ -64,7 +66,7 @@ void ofApp::setup() {
     // set the position in screen that'll represent the center of the speaker
     // circle and it's radius
     circleCenter = ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2);
-    circleRadius = 100;
+    circleRadius = 50;
     hoaCoord->setAmbisonicCenter(circleCenter);
     hoaCoord->setAmbisonicRadius(circleRadius);
     
@@ -84,22 +86,6 @@ void ofApp::setup() {
                       nBuffers);
     
     
-    /*gui.setup();
-    
-    gui.add(intSlider.setup("int slider", 64, 3, 64));
-    gui.add(floatSlider.setup("float slider", 30.0, 0.0, 300.0));
-    
-    gui.add(toggle.setup("toggle", false));
-    gui.add(button.setup("button"));
-    gui.add(label.setup("label", "THIS IS A LABEL"));
-    
-    gui.add(intField.setup("int field", 100, 0, 100));
-    gui.add(floatField.setup("float field", 100.0, 0.0, 100.0));
-    gui.add(textField.setup("text field", "text"));
-    
-    gui.add(vec2Slider.setup("vec2 slider", ofVec2f(0, 0), ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
-    gui.add(vec3Slider.setup("vec3 slider", ofVec3f(100, 150, 90), ofVec3f(0, 0, 0), ofVec3f(255, 255, 255)));
-    gui.add(vec4Slider.setup("vec4 slider", ofVec4f(0, 0, 0, 0), ofVec4f(0, 0, 0, 0), ofVec4f(255, 255, 255, 255)));*/
 }
 
 //--------------------------------------------------------------
@@ -120,11 +106,14 @@ void ofApp::draw() {
     ofDrawCircle(_sourcePosition, 10);
     ofNoFill();
     ofDrawCircle(circleCenter, circleRadius);
-    //gui.draw();
+    
+    ofDrawBitmapString(ofSoundStreamListDevices(), 100, 100);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key) {}
+void ofApp::keyPressed(int key) {
+    cout << hoaCoord->getAzimuth(0);
+}
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {}
@@ -168,7 +157,7 @@ void ofApp::audioOut(float* output, int bufferSize, int nChannels) {
         //input = myOsc.tick() * (myEnv.tick() + 1) * 0.4;
         // set smoothed current radius and azimuth
         hoaEncoder->setRadius(hoaCoord->getRadius(0));
-        hoaEncoder->setAzimuth(hoaCoord->getAzimuth(0));
+        hoaEncoder->setAzimuth(hoaCoord->getAzimuth(0) + (M_PI+(M_PI/2))); //here set the azimuth
         
         // create the spherical harmonics
         hoaEncoder->process(&input, &harmonicsBuffer[0]);

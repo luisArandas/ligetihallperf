@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxHoa.h"
 #include "ofxStk.h"
-#include "ofxGui.h"
+//#include "ofxGui.h"
 #include "Draggable.hpp"
 
 #include <memory>
@@ -53,23 +53,6 @@ public:
     ofVec3f circleCenter;
     ofVec3f sourcePosition;
     ofVec3f _sourcePosition;
-
-    ofxPanel gui;
-    
-    ofxIntSlider intSlider;
-    ofxFloatSlider floatSlider;
-    
-    ofxToggle toggle;
-    ofxButton button;
-    ofxLabel label;
-    
-    ofxIntField intField;
-    ofxFloatField floatField;
-    ofxTextField textField;
-    
-    ofxVec2Slider vec2Slider;
-    ofxVec3Slider vec3Slider;
-    ofxVec4Slider vec4Slider;
     
     vector<shared_ptr<Draggable>> sounds;
     shared_ptr<Draggable> listener;
